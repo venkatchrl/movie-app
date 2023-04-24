@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import Movieitem from "./Movieitem";
 import requests from '../utils/requests';
+import MovieItem from "./Movieitem";
 
 const Movielist =() =>{
     const [movies, setMovies]=useState([]);
     
-    //  trending movies using useeffect to ender once
+    //  trending movies using useeffect to render once
     useEffect(() => { 
         fetchTrendingMovies();
     },[]);
@@ -20,9 +20,9 @@ const Movielist =() =>{
     }
 
     return (
-        <div>
+        <div className="p-5 my-10 sm:grid md:grid-cols-2 xl:grid-cols-3 3xl:flex flex-wrap justify-center">
         {movies.map((movie) => {
-            return <Movieitem movie={movie} key={movie?.id} />;
+            return <MovieItem movie={movie} key={movie?.id} />;
         })}
            
         </div>
