@@ -1,22 +1,28 @@
 import { useEffect, useState } from "react";
 import requests from '../utils/requests';
-import MovieItem from "./Movieitem";
+
+import { useSearchParams } from "react-router-dom";
+import MovieItem from "./MovieItem";
 
 const Movielist =() =>{
     const [movies, setMovies]=useState([]);
+    const [searchParams]=useSearchParams();
+    const params = searchParams.get("genre");
     
     //  trending movies using useeffect to render once
     useEffect(() => { 
         fetchTrendingMovies();
-    },[]);
+    },[params]);
 
     const fetchTrendingMovies = async () =>{
         const data = await fetch(
-            `https://api.themoviedb.org/3/${requests.fetchTrending.url}`
+            `https://api.themoviedb.org/3/${
+                requests[params]?.url || requests.fetchTrending.url}`
           );
         const movielist= await data.json();
     
-        setMovies(movielist.results);
+        setMovies(movielist?.results);
+        console.log(movielist);
     }
 
     return (
